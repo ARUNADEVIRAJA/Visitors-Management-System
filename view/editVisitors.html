@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pending Requests</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .request-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .request-info {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .approve {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .reject {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pending Visitor Requests</h1>
+
+  <div id="requests-container">
+    <!-- Requests will be inserted here -->
+  </div>
+
+  <script>
+    // Example static data - replace with dynamic data from backend
+    const requests = [
+      { id: 1, name: "John Doe", reason: "Meeting with manager" },
+      { id: 2, name: "Jane Smith", reason: "Document collection" }
+    ];
+
+    const container = document.getElementById("requests-container");
+
+    requests.forEach(request => {
+      const card = document.createElement("div");
+      card.className = "request-card";
+
+      card.innerHTML = `
+        <div class="request-info"><strong>Name:</strong> ${request.name}</div>
+        <div class="request-info"><strong>Reason:</strong> ${request.reason}</div>
+        <button class="btn approve" onclick="handleApprove(${request.id})">Approve</button>
+        <button class="btn reject" onclick="handleReject(${request.id})">Reject</button>
+      `;
+
+      container.appendChild(card);
+    });
+
+    function handleApprove(id) {
+      alert("Request " + id + " approved");
+      // TODO: Send approval to backend
+    }
+
+    function handleReject(id) {
+      alert("Request " + id + " rejected");
+      // TODO: Send rejection to backend
+    }
+  </script>
+</body>
+</html>

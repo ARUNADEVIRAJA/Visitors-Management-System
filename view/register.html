@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visitor Registration</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Visitor Registration Modal -->
+<div class="modal fade" id="visitorModal" tabindex="-1" role="dialog" aria-labelledby="visitorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="visitorForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="visitorModalLabel">Register New Visitor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Form Fields -->
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" name="first_name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" name="last_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contact">contact</label>
+            <input type="phonenumber" class="form-control" id="contact" name="contact" required>
+          </div>
+
+        <div class="form-group">
+          <label for="purpose">Purpose of Visit</label>
+          <input type="text" class="form-control" id="purpose" name="purpose" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="textarea" class="form-control" id="address" name="address" required>
+          </div>
+
+        <div class="form-group">
+          <label for="visitDate">Visit Date</label>
+          <input type="date" class="form-control" id="visitDate" name="visit_date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="visitTime">Visit Time</label>
+          <input type="time" class="form-control" id="visitTime" name="visit_time" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PersonToMeet">Person to Meet</label>
+            <input type="text" class="form-control" id="personToMeet" name="person_to_meet" required>
+          </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- JS (Bootstrap & jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Auto-show Modal on Page Load -->
+<script>
+  $(document).ready(function() {
+    $('#visitorModal').modal('show');
+
+    $('#visitorForm').on('submit', function (e) {
+      e.preventDefault();
+      const visitorData = {
+        firstName: $('#firstName').val(),
+        lastName: $('#lastName').val(),
+        email: $('#email').val(),
+        contact: $('#contact').val(),
+        purpose: $('#purpose').val(),
+        address: $('#address').val(),
+        visitDate: $('#visitDate').val(),
+        visitTime: $('#visitTime').val(),
+        personToMeet:$('#personToMeet').val()
+      };
+
+      console.log('Visitor Data:', visitorData);
+      $('#visitorModal').modal('hide');
+      alert('Visitor Registered!');
+    });
+  });
+</script>
+
+</body>
+</html>
