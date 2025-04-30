@@ -1,5 +1,5 @@
 //api/user/user.js
-const { User } = require('../../models/user');
+const { User } = require('../../models');
 const express = require('express');
 
 
