@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
-const userRoutes = require('./api/user'); // ✅ Correct router import
+const userRoutes = require('./api/user'); 
 const app = express();
 
 
@@ -26,10 +26,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-// Use only this router
-app.use('/api/user', userRoutes); // ✅ This works
-
-// Session setup
+app.use('/api/user', userRoutes); 
 
 app.use(express.static('public'));
 

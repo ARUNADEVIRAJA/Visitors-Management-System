@@ -1,4 +1,4 @@
-// controllers/user.js
+//api/user/user.js
 const { User } = require('../../models/user');
 const express = require('express');
 
