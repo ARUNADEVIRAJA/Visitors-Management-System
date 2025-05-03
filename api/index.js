@@ -3,6 +3,7 @@ const path = require('path');
 const router = express.Router();
 
 router.use('/user', require('./user/index'));
+
 // Redirect to login
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../view', 'login.html'));
@@ -42,15 +43,22 @@ router.get('/logout', (req, res) => {
     });
 });
 
-router.post('/roles', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-      const { role } = req.body;
-      if (!role) return res.status(400).json({ error: "Role name is required" });
-  
-      const newRole = await UserRole.create({ role }); // 'status' will default to 1
-      res.status(201).json(newRole);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+      const roles = await UserRole.findAll();
+      res.json(roles);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch roles' });
     }
   });
+  router.post('/', async (req, res) => {
+    try {
+      const { role } = req.body;
+      const newRole = await UserRole.create({ role });
+      res.status(201).json(newRole);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to create role' });
+    }
+  });
+  
 module.exports = router;

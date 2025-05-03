@@ -15,6 +15,7 @@
     <link href=" /vendors/DataTables/datatables.min.css" rel="stylesheet" />
     <!-- THEME STYLES-->
     <link href=" /css/main.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- PAGE LEVEL STYLES-->
 </head>
 <body class="fixed-navbar">
@@ -198,10 +199,10 @@
                             <span class="nav-label">Master</span><i class="fa fa-angle-left arrow"></i></a>
                         <ul class="nav-2-level collapse">
                             <li>
-                                <a href='/userrole'>User</a>
+                                <a href='/userrole'>User Role</a>
                             </li>
                             <li>
-                                <a href='/users'>Employee Master</a>
+                                <a href='/users'>User</a>
                             </li>
                         </ul>
                     </li>
@@ -253,11 +254,7 @@
 
                 </ol>
             </div>
-            <div class="text-right m-b-3 p-3">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal">
-                    New User
-                </button>
-            </div>
+           
             <div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="addRoleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                   <form id="addRoleForm">
@@ -290,8 +287,8 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                       </div>
                       <div>
-                        <label for="contact">contact</label>
-                        <input type="tel" class="form-control" id="contact" name="contact" required>
+                        <label for="phone">Phone number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required>
                       </div>
                       <br>
                       <div>
@@ -316,19 +313,23 @@
             <div class="page-content fade-in-up">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Data Table</div>
+                        <div class="ibox-title">User Table</div>
+                        <div class="text-right m-b-3 p-3">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal">
+                                New User
+                            </button>
+                        </div>
                     </div>
                     <div class="ibox-body">
                         <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>id</th>
                                     <th>FirstName</th>
                                     <th>LastName</th>
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Password</th>
-                                    <th>Contact</th>
+                                    <th>Phone number</th>
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -336,7 +337,6 @@
                             </thead>   
                             <tbody>
                                 <tr>
-                                    <td>1</td>
                                     <td>Aruna</td>
                                     <td>Raja</td>
                                     <td>Arunadevi</td>
@@ -345,7 +345,12 @@
                                     <td>9600469576</td>
                                     <td>Employee</td>
                                     <td>Active</td>
-                                    <
+                                    <td>
+                                        <button class="btn btn-sm btn-info edit-btn" data-id="1"><i
+                                                class="fas fa-pen"></i> </button>
+                                        <button class="btn btn-sm btn-danger delete-btn"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </td>
                                 </tr>
                                 
                             </tbody>

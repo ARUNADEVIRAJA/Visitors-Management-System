@@ -3,16 +3,16 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const app = express();
 const db=require('./models');
-
-
-const {sequelize} = require('./models/index');
+const {sequelize}=require('./models');
+const userRoleRoutes=require('./api/userRole');
+const path = require('path');
 
 (async () => {
   try {
     await sequelize.authenticate();
     console.log('DB connected successfully');
 
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: false});
     console.log('Tables created');
   } catch (err) {
     console.error('Error:', err);
@@ -29,11 +29,10 @@ app.use(session({
   saveUninitialized: true
 }));
 app.use('/api', require('./api/index'));
-// app.use('/api/user', require('./api/user/index')); 
+ 
+app.use(express.static(path.join(__dirname,'public')));
 
-app.use(express.static('public'));
-
-
+app.use('/api/userRoleList',require('./api/userRole'));
 
 app.use('/',require('./api/index'));
 // Start server
