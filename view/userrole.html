@@ -568,7 +568,7 @@
         function statusToString(status) {
           return status === 1 ? 'Active' : 'Inactive'
         }
-
+    
         function statusToInteger(status) {
           const validStatuses = { Active: 1, Inactive: 2 }
           if (!(status in validStatuses)) {
@@ -576,13 +576,14 @@
           }
           return validStatuses[status]
         }
-
-        // Initialize DataTable with AJAX
+    
+        // Initialize DataTable with AJAX and disable caching
         const table = $('#example-table').DataTable({
           pageLength: 10,
-          order: [], 
+          order: [],
           ajax: {
             url: '/api/userRole/get',
+            cache: false,
             dataSrc: function (response) {
               if (response.status) {
                 return response.data.map(role => ({
@@ -601,28 +602,23 @@
               data: null,
               render: function (data, type, row) {
                 return `
-                                <button class="btn btn-sm btn-info edit-btn" data-id="${row.id}"><i class="fas fa-pen"></i></button>
-                                <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}"><i class="fas fa-trash-alt"></i></button>
-                            `
+                  <button class="btn btn-sm btn-info edit-btn" data-id="${row.id}">
+                    <i class="fas fa-pen"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                `
               }
             }
           ]
         })
-
-        // Function to show the add role modal
-        function showAddRoleModal() {
-          $('#addRoleModal').modal('show')
-          if ($('.modal-backdrop').length === 0) {
-            $('body').append('<div class="modal-backdrop fade show"></div>')
-          }
-          $('body').addClass('modal-open')
-        }
-
-        // Event listener for the Add User Role button
+    
+        // Show Add Role Modal
         $('#addUserRoleButton').on('click', function () {
-          showAddRoleModal()
+          $('#addRoleModal').modal('show')
         })
-
+    
         // ADD NEW ROLE
         $('#addRoleForm').on('submit', function (e) {
           e.preventDefault()
@@ -631,7 +627,7 @@
             alert('Role name is required')
             return
           }
-
+    
           $.ajax({
             url: '/api/userRole/create',
             method: 'POST',
@@ -639,31 +635,26 @@
             data: JSON.stringify({ name, status: 1 }),
             success: function (response) {
               if (response.status) {
-                table.ajax.reload()
+                table.ajax.url('/api/userRole/get?t=' + new Date().getTime()).load(null, false)
                 $('#addRoleModal').modal('hide')
                 $('#addRoleForm')[0].reset()
-                $('body').removeClass('modal-open')
-                $('.modal-backdrop').remove()
               } else {
                 alert('Error adding role: ' + response.error)
               }
             },
             error: function (xhr) {
-              alert(
-                'Error adding role: ' +
-                  (xhr.responseJSON?.error || 'Unknown error')
-              )
+              alert('Error adding role: ' + (xhr.responseJSON?.error || 'Unknown error'))
             }
           })
         })
-
-     
+    
+        // Hide add modal cleanup
         $('#addRoleModal').on('hidden.bs.modal', function () {
           $('body').removeClass('modal-open')
           $('.modal-backdrop').remove()
         })
-
-        
+    
+        // Edit role button click
         $(document).on('click', '.edit-btn', function () {
           const roleId = $(this).data('id')
           $.ajax({
@@ -676,12 +667,6 @@
                 $('#editRoleName').val(role.name)
                 $('#editStatus').val(statusToString(role.status))
                 $('#editRoleModal').modal('show')
-                if ($('.modal-backdrop').length === 0) {
-                  $('body').append(
-                    '<div class="modal-backdrop fade show"></div>'
-                  )
-                }
-                $('body').addClass('modal-open')
               } else {
                 alert('Error: ' + response.error)
               }
@@ -691,25 +676,25 @@
             }
           })
         })
-
-   
+    
+        // Hide edit modal cleanup
         $('#editRoleModal').on('hidden.bs.modal', function () {
           $('body').removeClass('modal-open')
           $('.modal-backdrop').remove()
         })
-
- 
+    
+        // EDIT ROLE
         $('#editRoleForm').on('submit', function (e) {
           e.preventDefault()
           const roleId = $('#editRowId').val()
           const updatedRole = $('#editRoleName').val().trim()
           const updatedStatus = $('#editStatus').val()
-
+    
           if (!updatedRole) {
             alert('Role name is required')
             return
           }
-
+    
           $.ajax({
             url: `/api/userRole/update/${roleId}`,
             method: 'PUT',
@@ -720,23 +705,18 @@
             }),
             success: function (response) {
               if (response.status) {
-                table.ajax.reload()
+                table.ajax.url('/api/userRole/get?t=' + new Date().getTime()).load(null, false)
                 $('#editRoleModal').modal('hide')
-                $('body').removeClass('modal-open')
-                $('.modal-backdrop').remove()
               } else {
                 alert('Error: ' + response.error)
               }
             },
             error: function (xhr) {
-              alert(
-                'Error updating role: ' +
-                  (xhr.responseJSON?.error || 'Unknown error')
-              )
+              alert('Error updating role: ' + (xhr.responseJSON?.error || 'Unknown error'))
             }
           })
         })
-
+    
         // DELETE ROLE
         $(document).on('click', '.delete-btn', function () {
           const roleId = $(this).data('id')
@@ -744,23 +724,23 @@
             $.ajax({
               url: `/api/userRole/delete/${roleId}`,
               method: 'DELETE',
+              cache: false,
               success: function (response) {
                 if (response.status) {
-                  table.ajax.reload()
+                  console.log('Deleted successfully')
+                  table.ajax.url('/api/userRole/get?t=' + new Date().getTime()).load(null, false)
                 } else {
                   alert('Error: ' + response.error)
                 }
               },
               error: function (xhr) {
-                alert(
-                  'Error deleting role: ' +
-                    (xhr.responseJSON?.error || 'Unknown error')
-                )
+                alert('Error deleting role: ' + (xhr.responseJSON?.error || 'Unknown error'))
               }
             })
           }
         })
       })
     </script>
+    
   </body>
 </html>
