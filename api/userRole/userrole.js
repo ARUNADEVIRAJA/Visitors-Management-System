@@ -112,7 +112,7 @@ module.exports.delete = async function (req, res) {
         'ALTER SEQUENCE "UserRoles_id_seq" RESTART WITH 1;'
       )
     }
-    res.status(200).send({ status: true, message: 'Role deleted successfully' })
+  res.status(200).send({ status: true, message: 'Role deleted successfully' })
   } catch (error) {
     res.status(500).send({ status: false, error: error.message })
   }
