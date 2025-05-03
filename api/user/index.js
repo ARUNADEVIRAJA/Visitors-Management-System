@@ -1,9 +1,9 @@
 // api/user/index.js
-const express = require('express');
-const router = express.Router();
-const { getAllUsers ,loginUser} = require('./user');
+const express = require('express')
+const router = express.Router()
+const { getAllUsers, loginUser } = require('./user')
 
-router.get('/', getAllUsers);
+router.get('/', getAllUsers)
 
-router.post('/login',loginUser);
-module.exports = router;
+router.post('/login', loginUser)
+module.exports = router

@@ -1,7 +1,6 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize')
 
-
-module.exports = (sequelize) => {
+module.exports = sequelize => {
   const User = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
@@ -30,11 +29,11 @@ module.exports = (sequelize) => {
     phone: {
       type: DataTypes.BIGINT,
       allowNull: false
-    },
-  });
+    }
+  })
 
-  User.associate = (models ) => {
-    User.belongsTo(models.UserRole);
-  };
-  return User;
-};
+  User.associate = models => {
+    User.belongsTo(models.UserRole)
+  }
+  return User
+}
