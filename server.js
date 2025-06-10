@@ -5,6 +5,17 @@ const app = express()
 const { sequelize } = require('./models')
 const path = require('path')
 
+;(async () => {
+  try {
+    await sequelize.authenticate()
+    console.log('DB connected successfully')
+
+    await sequelize.sync({ force: false })
+    console.log('Tables created')
+  } catch (err) {
+    console.error('Error:', err)
+  }
+})()
 
 
 // Middleware for parsing
